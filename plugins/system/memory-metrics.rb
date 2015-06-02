@@ -69,6 +69,7 @@ class MemoryGraphite < Sensu::Plugin::Metric::CLI::Graphite
       else
         line.gsub!('(', '_')
         line.delete!(')')
+        line.delete!(':')
         mem[line.split(/\s+/)[0].downcase] = line.split(/\s+/)[1].to_i
       end
     end
