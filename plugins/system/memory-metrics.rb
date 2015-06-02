@@ -70,7 +70,11 @@ class MemoryGraphite < Sensu::Plugin::Metric::CLI::Graphite
         line.gsub!('(', '_')
         line.delete!(')')
         line.delete!(':')
-        mem[line.split(/\s+/)[0].downcase] = line.split(/\s+/)[1].to_i
+        if line.match(/kB$/)
+          mem[line.split(/\s+/)[0].downcase] = line.split(/\s+/)[1].to_i * 1024
+        else
+          mem[line.split(/\s+/)[0].downcase] = line.split(/\s+/)[1].to_i
+        end
       end
     end
 
